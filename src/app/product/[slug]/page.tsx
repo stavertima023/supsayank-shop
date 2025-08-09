@@ -9,15 +9,20 @@ interface Props {
 
 export default async function ProductPage({ params }: Props) {
   const { slug } = await params;
-  const product = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      images: { orderBy: { index: "asc" } },
-      variants: true,
-      brand: true,
-      category: true,
-    },
-  });
+  let product: any = null;
+  try {
+    product = await prisma.product.findUnique({
+      where: { slug },
+      include: {
+        images: { orderBy: { index: "asc" } },
+        variants: true,
+        brand: true,
+        category: true,
+      },
+    });
+  } catch (e) {
+    // ignore
+  }
   if (!product) return notFound();
 
   return (

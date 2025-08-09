@@ -3,14 +3,27 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export default async function CatalogPage() {
-  const products = await prisma.product.findMany({
-    include: {
-      images: { orderBy: { index: "asc" }, take: 1 },
-      brand: true,
-    },
-    orderBy: { createdAt: "desc" },
-    take: 24,
-  });
+  let products: Array<{
+    id: string;
+    slug: string;
+    title: string;
+    priceCents: number;
+    currency: string;
+    images: { url: string | null }[];
+    brand: { name: string };
+  }> = [];
+  try {
+    products = await prisma.product.findMany({
+      include: {
+        images: { orderBy: { index: "asc" }, take: 1 },
+        brand: true,
+      },
+      orderBy: { createdAt: "desc" },
+      take: 24,
+    });
+  } catch (e) {
+    // ignore and render empty state
+  }
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
