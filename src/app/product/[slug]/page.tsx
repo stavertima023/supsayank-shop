@@ -4,12 +4,26 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 interface Props {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
+}
+
+type ProductImageLite = { id: string; url: string | null };
+type VariantLite = { id: string; size?: string | null };
+interface ProductDetail {
+  title: string;
+  slug: string;
+  description?: string | null;
+  priceCents: number;
+  currency: string;
+  images: ProductImageLite[];
+  variants: VariantLite[];
+  brand: { name: string };
+  category: { name: string };
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { slug } = await params;
-  let product: any = null;
+  const { slug } = params;
+  let product: ProductDetail | null = null;
   try {
     product = await prisma.product.findUnique({
       where: { slug },
@@ -33,8 +47,8 @@ export default async function ProductPage({ params }: Props) {
           style={{ backgroundImage: `url(${product.images[0]?.url ?? "https://images.unsplash.com/photo-1512436991641-6745cdb1723f"})` }}
         />
         <div className="grid grid-cols-4 gap-3">
-          {product.images.slice(0, 4).map((img) => (
-            <div key={img.id} className="aspect-square rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${img.url})` }} />
+          {product.images.slice(0, 4).map((img: ProductImageLite) => (
+            <div key={img.id} className="aspect-square rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${img.url ?? ""})` }} />
           ))}
         </div>
       </div>
@@ -51,7 +65,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="space-y-2">
             <div className="text-sm">Размер</div>
             <div className="flex flex-wrap gap-2">
-              {product.variants.map((v) => (
+              {product.variants.map((v: VariantLite) => (
                 <button key={v.id} className="px-3 py-2 rounded-full border border-black/15 text-sm hover:bg-black/5">
                   {v.size ?? "OS"}
                 </button>
