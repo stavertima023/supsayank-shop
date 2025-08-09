@@ -1,102 +1,64 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen bg-white text-black">
+      <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-black/10">
+        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
+          <Link href="/" className="text-xl tracking-tight font-semibold">Supsayank shop</Link>
+          <nav className="flex items-center gap-6 text-sm">
+            <Link href="/catalog" className="hover:opacity-70">Каталог</Link>
+            <Link href="/brands" className="hover:opacity-70">Бренды</Link>
+            <Link href="/cart" className="hover:opacity-70">Корзина</Link>
+          </nav>
         </div>
+      </header>
+
+      <main>
+        <section className="border-b border-black/10">
+          <div className="mx-auto max-w-6xl px-4 py-16 grid gap-10 md:grid-cols-2">
+            <div className="space-y-6">
+              <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Streetwear от топ-брендов</h1>
+              <p className="text-black/70 text-lg">Supreme, Stüssy, Palace и другие. Минимализм, акцент на продукте, быстрая доставка.</p>
+              <div className="flex gap-3">
+                <Link href="/catalog" className="px-5 py-3 bg-black text-white rounded-full text-sm hover:bg-black/90">Открыть каталог</Link>
+                <Link href="/brands" className="px-5 py-3 border border-black rounded-full text-sm hover:bg-black/5">Бренды</Link>
+              </div>
+            </div>
+            <div className="aspect-[4/3] bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center rounded-2xl" />
+          </div>
+        </section>
+
+        <section>
+          <div className="mx-auto max-w-6xl px-4 py-12">
+            <div className="flex items-baseline justify-between mb-6">
+              <h2 className="text-2xl font-semibold">Новинки</h2>
+              <Link href="/catalog" className="text-sm text-black/70 hover:text-black">Все товары →</Link>
+            </div>
+            <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {[1,2,3,4].map((i) => (
+                <Link key={i} href={`/product/sample-${i}`} className="group">
+                  <div className="aspect-square rounded-xl bg-[url('https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop')] bg-cover bg-center"></div>
+                  <div className="mt-3">
+                    <div className="text-sm">Supreme</div>
+                    <div className="text-sm/5 text-black/70">Logo Tee</div>
+                    <div className="text-sm mt-1 font-semibold">6 900 ₽</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+
+      <footer className="border-t border-black/10">
+        <div className="mx-auto max-w-6xl px-4 py-10 text-sm text-black/70 flex items-center justify-between">
+          <div>© {new Date().getFullYear()} Supsayank shop</div>
+          <div className="flex gap-4">
+            <Link href="/policy" className="hover:text-black">Политика</Link>
+            <Link href="/contacts" className="hover:text-black">Контакты</Link>
+          </div>
+        </div>
       </footer>
     </div>
   );
