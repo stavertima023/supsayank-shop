@@ -4,7 +4,7 @@ import Link from "next/link";
 export const dynamic = "force-dynamic";
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 type ProductImageLite = { id: string; url: string | null };
@@ -22,7 +22,7 @@ interface ProductDetail {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const { slug } = params;
+  const { slug } = await params;
   let product: ProductDetail | null = null;
   try {
     product = await prisma.product.findUnique({
