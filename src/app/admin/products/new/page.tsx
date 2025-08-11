@@ -16,7 +16,7 @@ async function createProduct(formData: FormData) {
   if (!slug && title) slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
-  const currency = String(formData.get("currency") || "USD");
+  const currency = "RUB";
   const brandId = String(formData.get("brandId") || "");
   const categoryId = String(formData.get("categoryId") || "");
   const imagesRaw = String(formData.get("images") || "").trim();
@@ -24,17 +24,34 @@ async function createProduct(formData: FormData) {
 
   if (!title || !slug || !brandId || !categoryId || !price) return;
 
+  // ensure unique slug for product
+  let base = slugify(slug);
+  if (!base) base = Math.random().toString(36).slice(2, 8);
+  let candidate = base;
+  let n = 2;
+  while (true) {
+    const exists = await prisma.product.findUnique({ where: { slug: candidate } });
+    if (!exists) break;
+    candidate = `${base}-${n++}`;
+  }
+
   const product = await prisma.product.create({
     data: {
       title,
-      slug,
+      slug: candidate,
       description,
       priceCents: Math.round(price * 100),
       currency,
       brandId,
       categoryId,
-      images: {
-        create: imageUrls.map((url, index) => ({ url, index })),
+      images: { create: imageUrls.map((url, index) => ({ url, index })) },
+      variants: {
+        create: ["XS","S","M","L","XL","XXL"].map((size) => ({
+          size: size as "XS"|"S"|"M"|"L"|"XL"|"XXL",
+          color: null,
+          sku: `${candidate}-${size}`,
+          stock: 999999,
+        })),
       },
     },
   });
@@ -75,10 +92,7 @@ export default async function AdminNewProductPage() {
           <label className="text-sm text-muted-foreground">Цена</label>
           <input name="price" type="number" step="0.01" className="px-3 py-2 rounded-md bg-muted border border-border" required />
         </div>
-        <div className="grid gap-2">
-          <label className="text-sm text-muted-foreground">Валюта</label>
-          <input name="currency" defaultValue="USD" className="px-3 py-2 rounded-md bg-muted border border-border" />
-        </div>
+        {/* Валюта фиксирована как RUB */}
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Бренд</label>
           <select name="brandId" className="px-3 py-2 rounded-md bg-muted border border-border" required>

@@ -30,7 +30,7 @@ export default function AutoSlug({ titleName = "title", slugName = "slug" }: Pro
     return () => {
       titleInput.removeEventListener("input", onTitle);
     };
-  }, []);
+  }, [slugName, titleName]);
   return null;
 }
 
