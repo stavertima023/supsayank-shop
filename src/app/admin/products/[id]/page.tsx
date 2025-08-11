@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { notFound, redirect } from "next/navigation";
 import type { Prisma, Size } from "@prisma/client";
+import { slugify } from "@/lib/slugify";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +14,8 @@ async function updateProduct(formData: FormData) {
   requireAdminOrRedirect();
   const id = String(formData.get("id") || "");
   const title = String(formData.get("title") || "").trim();
-  const slug = String(formData.get("slug") || "").trim();
+  let slug = String(formData.get("slug") || "").trim();
+  if (!slug && title) slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = String(formData.get("currency") || "USD");

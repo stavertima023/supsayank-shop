@@ -10,6 +10,7 @@ export default function UploadImage({ targetTextareaName = "images" }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isUploading, setUploading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  const [previews, setPreviews] = useState<string[]>([]);
 
   async function onUploadClick() {
     const fileInput = inputRef.current;
@@ -36,6 +37,7 @@ export default function UploadImage({ targetTextareaName = "images" }: Props) {
         textarea.dispatchEvent(new Event("input", { bubbles: true }));
       }
       setMessage("Загружено: " + url);
+      setPreviews((arr) => [url, ...arr].slice(0, 6));
       fileInput.value = "";
     } catch (e) {
       const err = e as { message?: string } | undefined;
@@ -54,6 +56,13 @@ export default function UploadImage({ targetTextareaName = "images" }: Props) {
         </button>
       </div>
       {message && <div className="text-xs text-muted-foreground">{message}</div>}
+      {previews.length > 0 && (
+        <div className="mt-2 grid grid-cols-3 gap-2">
+          {previews.map((src, i) => (
+            <div key={`${src}-${i}`} className="w-full aspect-square rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${src})` }} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

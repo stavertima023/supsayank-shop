@@ -2,6 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { redirect } from "next/navigation";
 import UploadImage from "@/app/admin/_components/UploadImage";
+import AutoSlug from "@/app/admin/_components/AutoSlug";
+import { slugify } from "@/lib/slugify";
 
 export const dynamic = "force-dynamic";
 
@@ -10,7 +12,8 @@ async function createProduct(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const title = String(formData.get("title") || "").trim();
-  const slug = String(formData.get("slug") || "").trim();
+  let slug = String(formData.get("slug") || "").trim();
+  if (!slug && title) slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = String(formData.get("currency") || "USD");
@@ -55,6 +58,7 @@ export default async function AdminNewProductPage() {
     <div className="max-w-2xl">
       <h1 className="text-2xl font-semibold mb-4">Новый товар</h1>
       <form action={createProduct} className="grid gap-4">
+        <AutoSlug />
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Название</label>
           <input name="title" className="px-3 py-2 rounded-md bg-muted border border-border" required />

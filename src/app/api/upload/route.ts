@@ -16,16 +16,22 @@ export async function POST(req: Request) {
   }
   const form = await req.formData();
   const file = form.get("file");
-  if (!(file instanceof File)) {
+  type FileLike = { arrayBuffer: () => Promise<ArrayBuffer>; name?: string; type?: string };
+  const isFileLike = (v: unknown): v is FileLike => {
+    return !!v && typeof (v as Record<string, unknown>).arrayBuffer === "function";
+  };
+  if (!isFileLike(file)) {
     return new NextResponse("Missing file", { status: 400 });
   }
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
   const bucket = process.env.SUPABASE_BUCKET || "images";
-  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
+  const originalName = (file as FileLike).name || "upload.bin";
+  const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}-${safeName}`;
   const supabase = getSupabaseAdmin();
   const { data, error } = await supabase.storage.from(bucket).upload(fileName, buffer, {
-    contentType: file.type || "application/octet-stream",
+    contentType: (file as FileLike).type || "application/octet-stream",
     upsert: false,
   });
   if (error) {
