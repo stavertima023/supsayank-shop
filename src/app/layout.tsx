@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
+import TopNav from "@/app/_components/TopNav";
 export const dynamic = "force-dynamic";
 
 const geistSans = Geist({
@@ -42,28 +43,7 @@ export default async function RootLayout({
         <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
           <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
             <Link href="/" className="text-lg tracking-tight font-semibold hover:opacity-80">Supsayank shop</Link>
-            <nav className="flex items-center gap-8 text-lg">
-              <div className="relative group">
-                <button className="px-3 py-2 rounded hover:bg-muted">Одежда</button>
-                <div className="absolute left-0 mt-2 group-hover:flex hidden flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-60 z-50">
-                  {categories.map((c) => (
-                    <Link key={c.id} href={`/category/${c.slug}`} className="px-4 py-2 rounded hover:bg-muted">
-                      {c.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-              <div className="relative group">
-                <button className="px-3 py-2 rounded hover:bg-muted">Бренды</button>
-                <div className="absolute left-0 mt-2 group-hover:flex hidden flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-60 max-h-96 overflow-auto z-50">
-                  {brands.map((b) => (
-                    <Link key={b.id} href={`/brands/${b.slug}`} className="px-4 py-2 rounded hover:bg-muted">
-                      {b.name}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </nav>
+            <TopNav brands={brands} categories={categories} />
             <form action="/catalog" className="hidden md:block">
               <input name="q" placeholder="Поиск товаров" className="px-3 py-2 rounded-md bg-muted border border-border text-sm w-64 focus:outline-none focus:ring-2 focus:ring-accent" />
             </form>
