@@ -106,7 +106,7 @@ export default async function AdminEditProductPage({ params }: Props) {
           <label className="text-sm text-muted-foreground">Цена</label>
           <input name="price" type="number" step="0.01" defaultValue={(product.priceCents/100).toString()} className="px-3 py-2 rounded-md bg-muted border border-border" required />
         </div>
-        {/* Валюта убрана, всегда RUB */}
+        {/* Валюта убрана: всегда RUB */}
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Бренд</label>
           <select name="brandId" defaultValue={product.brandId} className="px-3 py-2 rounded-md bg-muted border border-border" required>

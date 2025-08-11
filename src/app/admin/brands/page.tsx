@@ -9,12 +9,14 @@ async function createBrand(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const name = String(formData.get("name") || "").trim();
+  let slug = String(formData.get("slug") || "").trim();
   if (!name) return;
-  // generate unique slug
-  let base = slugify(name);
+  if (!slug) slug = slugify(name);
+  let base = slugify(slug);
   if (!base) base = Math.random().toString(36).slice(2, 8);
   let candidate = base;
   let n = 2;
+  // ensure unique slug
   while (true) {
     const exists = await prisma.brand.findUnique({ where: { slug: candidate } });
     if (!exists) break;
@@ -62,6 +64,7 @@ export default async function AdminBrandsPage() {
         <h2 className="text-lg font-semibold mb-3">Добавить бренд</h2>
         <form action={createBrand} className="grid gap-3 max-w-md">
           <input name="name" placeholder="Название" className="px-3 py-2 rounded-md bg-muted border border-border" required />
+          <input name="slug" placeholder="slug" className="px-3 py-2 rounded-md bg-muted border border-border" required />
           <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md text-sm" type="submit">Добавить</button>
         </form>
       </div>
