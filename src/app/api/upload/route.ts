@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { v2 as cloudinary } from "cloudinary";
 import { isAdminAuthenticated } from "@/lib/adminAuth";
+import { getSupabaseAdmin } from "@/lib/supabaseAdmin";
 
 export const dynamic = "force-dynamic";
 
@@ -19,22 +19,22 @@ export async function POST(req: Request) {
   if (!(file instanceof File)) {
     return new NextResponse("Missing file", { status: 400 });
   }
-  cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-  });
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
-  const upload = await new Promise<{ url: string }>((resolve, reject) => {
-    const folder = process.env.CLOUDINARY_FOLDER || "supsayank";
-    const stream = cloudinary.uploader.upload_stream({ folder }, (err, result) => {
-      if (err || !result) return reject(err);
-      resolve({ url: result.secure_url });
-    });
-    stream.end(buffer);
+  const bucket = process.env.SUPABASE_BUCKET || "images";
+  const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}-${file.name}`;
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase.storage.from(bucket).upload(fileName, buffer, {
+    contentType: file.type || "application/octet-stream",
+    upsert: false,
   });
-  return NextResponse.json(upload);
+  if (error) {
+    return new NextResponse(error.message, { status: 500 });
+  }
+  // Build public URL
+  const urlBase = process.env.SUPABASE_URL?.replace(/\/$/, "");
+  const publicUrl = `${urlBase}/storage/v1/object/public/${bucket}/${encodeURIComponent(fileName)}`;
+  return NextResponse.json({ url: publicUrl });
 }
 
 
