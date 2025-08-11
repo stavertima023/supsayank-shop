@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { redirect } from "next/navigation";
+import UploadImage from "@/app/admin/_components/UploadImage";
 
 export const dynamic = "force-dynamic";
 
@@ -95,7 +96,7 @@ export default async function AdminNewProductPage() {
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Фото (по одному URL в строке)</label>
           <textarea name="images" className="px-3 py-2 rounded-md bg-muted border border-border min-h-28" placeholder="https://...\nhttps://..." />
-          <UploadWidget />
+          <UploadImage />
         </div>
         <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md text-sm" type="submit">Создать</button>
       </form>
@@ -103,28 +104,6 @@ export default async function AdminNewProductPage() {
   );
 }
 
-async function UploadWidget() {
-  return (
-    <div className="text-sm text-muted-foreground">
-      <form action={async (formData: FormData) => {
-        'use server';
-        const { isAdminAuthenticated } = await import("@/lib/adminAuth");
-        if (!(await isAdminAuthenticated())) return;
-        const file = formData.get('file');
-        if (!(file instanceof File)) return;
-        const res = await fetch(process.env.NEXT_PUBLIC_BASE_URL ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/upload` : `http://localhost:3000/api/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-        // Intentionally no-op here; client will copy the returned URL manually for now.
-        void res;
-      }} className="mt-2 flex items-center gap-2">
-        <input type="file" name="file" accept="image/*" className="text-xs" />
-        <button type="submit" className="px-2 py-1 rounded bg-accent text-accent-foreground text-xs">Загрузить фото</button>
-      </form>
-      <div className="mt-1">После загрузки скопируйте URL из ответа в поле выше.</div>
-    </div>
-  );
-}
+// removed old server-action uploader in favor of client UploadImage component
 
 
