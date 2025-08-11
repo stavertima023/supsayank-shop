@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { slugify } from "@/lib/slugify";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -23,6 +24,7 @@ async function createBrand(formData: FormData) {
     candidate = `${base}-${n++}`;
   }
   await prisma.brand.create({ data: { name, slug: candidate } });
+  revalidatePath('/admin/brands');
 }
 
 async function deleteBrand(formData: FormData) {
@@ -64,7 +66,6 @@ export default async function AdminBrandsPage() {
         <h2 className="text-lg font-semibold mb-3">Добавить бренд</h2>
         <form action={createBrand} className="grid gap-3 max-w-md">
           <input name="name" placeholder="Название" className="px-3 py-2 rounded-md bg-muted border border-border" required />
-          <input name="slug" placeholder="slug" className="px-3 py-2 rounded-md bg-muted border border-border" required />
           <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md text-sm" type="submit">Добавить</button>
         </form>
       </div>

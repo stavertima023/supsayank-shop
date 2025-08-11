@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { redirect } from "next/navigation";
 import UploadImage from "@/app/admin/_components/UploadImage";
-// AutoSlug удалён из формы, slug генерируется сервером
+import { revalidatePath } from "next/cache";
 import { slugify } from "@/lib/slugify";
 
 export const dynamic = "force-dynamic";
@@ -56,7 +56,7 @@ async function createProduct(formData: FormData) {
       },
     },
   });
-
+  revalidatePath('/admin/products');
   redirect(`/admin/products/${product.id}`);
 }
 

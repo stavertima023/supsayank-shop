@@ -12,24 +12,7 @@ export default async function Home() {
   });
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
-        <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between relative">
-          <Link href="/" className="text-xl tracking-tight font-semibold">Supsayank shop</Link>
-          <nav className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center gap-6 text-lg font-semibold tracking-wide">
-            <Link href="/catalog?sale=1" className="hover:opacity-80">Sale</Link>
-            <Link href="/catalog?category=t-shirts" className="hover:opacity-80">Футболки</Link>
-            <Link href="/catalog?category=longsleeves" className="hover:opacity-80">Лонгсливы</Link>
-            <Link href="/catalog?category=hoodies" className="hover:opacity-80">Худи</Link>
-            <Link href="/catalog?category=zip-hoodies" className="hover:opacity-80">Зип‑худи</Link>
-            <Link href="/catalog?category=shorts" className="hover:opacity-80">Шорты</Link>
-          </nav>
-          <nav className="flex items-center gap-6 text-sm">
-            <Link href="/catalog" className="hover:opacity-70">Каталог</Link>
-            <Link href="/brands" className="hover:opacity-70">Бренды</Link>
-            <Link href="/cart" className="hover:opacity-70">Корзина</Link>
-          </nav>
-        </div>
-      </header>
+      {/* header moved to layout */}
 
       <main>
         <section className="border-b border-border">
@@ -37,10 +20,7 @@ export default async function Home() {
             <div className="space-y-6">
               <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Streetwear от топ-брендов</h1>
               <p className="text-muted-foreground text-lg">Supreme, Stüssy, Palace и другие. Минимализм, акцент на продукте, быстрая доставка.</p>
-              <div className="flex gap-3">
-                <Link href="/catalog" className="px-5 py-3 bg-accent text-accent-foreground rounded-full text-sm hover:bg-accent/90">Открыть каталог</Link>
-                <Link href="/brands" className="px-5 py-3 border border-border rounded-full text-sm hover:bg-muted">Бренды</Link>
-              </div>
+             
             </div>
             <div className="aspect-[4/3] bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center rounded-2xl" />
           </div>

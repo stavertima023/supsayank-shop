@@ -3,6 +3,7 @@ import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { notFound, redirect } from "next/navigation";
 import type { Prisma, Size } from "@prisma/client";
 import { slugify } from "@/lib/slugify";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -45,6 +46,7 @@ async function updateProduct(formData: FormData) {
       await tx.productImage.createMany({ data: imageUrls.map((url, index) => ({ url, index, productId: id })) });
     }
   });
+  revalidatePath('/admin/products');
 }
 
 async function deleteProduct(formData: FormData) {
