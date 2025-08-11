@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import Gallery from "@/app/product/_components/Gallery";
 export const dynamic = "force-dynamic";
 
 interface Props {
@@ -40,18 +41,8 @@ export default async function ProductPage({ params }: Props) {
   if (!product) return notFound();
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-10 grid gap-10 md:grid-cols-2">
-      <div className="space-y-3">
-        <div
-          className="aspect-square rounded-xl bg-cover bg-center"
-          style={{ backgroundImage: `url(${product.images[0]?.url ?? "https://images.unsplash.com/photo-1512436991641-6745cdb1723f"})` }}
-        />
-        <div className="grid grid-cols-4 gap-3">
-          {product.images.slice(0, 4).map((img: ProductImageLite) => (
-            <div key={img.id} className="aspect-square rounded-lg bg-cover bg-center" style={{ backgroundImage: `url(${img.url ?? ""})` }} />
-          ))}
-        </div>
-      </div>
+    <div className="mx-auto max-w-6xl px-4 py-6 md:py-10 grid gap-6 md:gap-10 md:grid-cols-2">
+      <Gallery images={product.images} />
 
       <div className="space-y-6">
         <div className="space-y-1">
@@ -74,11 +65,10 @@ export default async function ProductPage({ params }: Props) {
           </div>
         )}
 
-        <div className="flex gap-3">
-          <form action={async () => { 'use server'; /* placeholder for server action */ }}>
-            <button className="px-5 py-3 bg-accent text-accent-foreground rounded-full text-sm hover:bg-accent/90">В корзину</button>
-          </form>
-          <Link href="/cart" className="px-5 py-3 border border-border rounded-full text-sm hover:bg-muted">Перейти в корзину</Link>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <a href="https://t.me/mansionsell" target="_blank" rel="noopener noreferrer" className="px-5 py-3 bg-accent text-accent-foreground rounded-full text-sm text-center hover:bg-accent/90">
+            Купить товар — напишите менеджеру в Telegram @mansionsell
+          </a>
         </div>
       </div>
     </div>

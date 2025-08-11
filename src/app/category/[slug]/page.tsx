@@ -22,7 +22,7 @@ export default async function CategoryPage({ params, searchParams }: { params: P
           <Link key={b.id} href={`/category/${slug}?brand=${b.slug}`} className={`px-3 py-1 rounded-full border border-border text-sm hover:bg-muted ${b.slug===brandSlug? 'bg-muted' : ''}`}>{b.name}</Link>
         ))}
       </div>
-      <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((p) => (
           <Link key={p.id} href={`/product/${p.slug}`} className="group">
             <div className="aspect-square rounded-xl bg-cover bg-center" style={{ backgroundImage: `url(${p.images[0]?.url ?? ''})` }} />

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "prisma migrate deploy && prisma db push && node ./src/scripts/seed.mjs || true && next start",
+    "start": "prisma migrate deploy && prisma db push && next start",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate deploy",

@@ -2,39 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function run() {
-  // Brands
-  const brands = [
-    { name: "Supreme", slug: "supreme" },
-    { name: "Stüssy", slug: "stussy" },
-    { name: "Palace", slug: "palace" },
-    { name: "Off-White", slug: "off-white" },
-    { name: "Nike ACG", slug: "nike-acg" },
-  ];
-
-  for (const brand of brands) {
-    await prisma.brand.upsert({
-      where: { slug: brand.slug },
-      update: {},
-      create: brand,
-    });
-  }
-
-  // Categories
-  const categories = [
-    { name: "Худи", slug: "hoodies" },
-    { name: "Футболки", slug: "t-shirts" },
-    { name: "Аксессуары", slug: "accessories" },
-    { name: "Кроссовки", slug: "sneakers" },
-    { name: "Куртки", slug: "jackets" },
-  ];
-
-  for (const category of categories) {
-    await prisma.category.upsert({
-      where: { slug: category.slug },
-      update: {},
-      create: category,
-    });
-  }
+  // No default brands/categories — only admin-created
 
   // Example products
   const supreme = await prisma.brand.findFirst({ where: { slug: "supreme" } });
