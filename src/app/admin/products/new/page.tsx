@@ -39,7 +39,7 @@ async function createProduct(formData: FormData) {
 }
 
 export default async function AdminNewProductPage() {
-  requireAdminOrRedirect();
+  await requireAdminOrRedirect();
   const [brands, categories] = await Promise.all([
     prisma.brand.findMany({ orderBy: { name: "asc" } }),
     prisma.category.findMany({ orderBy: { name: "asc" } }),

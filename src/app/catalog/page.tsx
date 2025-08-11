@@ -21,7 +21,7 @@ export default async function CatalogPage() {
       orderBy: { createdAt: "desc" },
       take: 24,
     });
-  } catch (e) {
+  } catch {
     // ignore and render empty state
   }
 

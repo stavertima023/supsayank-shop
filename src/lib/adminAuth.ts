@@ -24,9 +24,10 @@ export function getExpectedAdminToken(): string {
   return computeAdminToken(password, salt);
 }
 
-export function setAdminCookie(): void {
+export async function setAdminCookie(): Promise<void> {
   const token = getExpectedAdminToken();
-  cookies().set(ADMIN_COOKIE_NAME, token, {
+  const jar = await cookies();
+  jar.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
     sameSite: "strict",
     secure: true,
@@ -35,12 +36,14 @@ export function setAdminCookie(): void {
   });
 }
 
-export function clearAdminCookie(): void {
-  cookies().delete(ADMIN_COOKIE_NAME);
+export async function clearAdminCookie(): Promise<void> {
+  const jar = await cookies();
+  jar.delete(ADMIN_COOKIE_NAME);
 }
 
-export function isAdminAuthenticated(): boolean {
-  const token = cookies().get(ADMIN_COOKIE_NAME)?.value;
+export async function isAdminAuthenticated(): Promise<boolean> {
+  const jar = await cookies();
+  const token = jar.get(ADMIN_COOKIE_NAME)?.value;
   if (!token) return false;
   try {
     const expected = getExpectedAdminToken();
@@ -50,8 +53,9 @@ export function isAdminAuthenticated(): boolean {
   }
 }
 
-export function requireAdminOrRedirect(): void {
-  if (!isAdminAuthenticated()) {
+export async function requireAdminOrRedirect(): Promise<void> {
+  const ok = await isAdminAuthenticated();
+  if (!ok) {
     redirect("/admin/login");
   }
 }

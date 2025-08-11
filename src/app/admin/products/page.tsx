@@ -5,7 +5,7 @@ import { requireAdminOrRedirect } from "@/lib/adminAuth";
 export const dynamic = "force-dynamic";
 
 export default async function AdminProductsPage() {
-  requireAdminOrRedirect();
+  await requireAdminOrRedirect();
   const products = await prisma.product.findMany({
     include: { brand: true, category: true, images: { orderBy: { index: "asc" }, take: 1 } },
     orderBy: { createdAt: "desc" },

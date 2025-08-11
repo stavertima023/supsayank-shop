@@ -11,7 +11,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/products" className="hover:opacity-80">Товары</Link>
             <Link href="/admin/brands" className="hover:opacity-80">Бренды</Link>
             <Link href="/admin/categories" className="hover:opacity-80">Категории</Link>
-            <form action={async () => { 'use server'; const { clearAdminCookie } = await import("@/lib/adminAuth"); clearAdminCookie(); }}>
+            <form action={async () => { 'use server'; const { clearAdminCookie } = await import("@/lib/adminAuth"); await clearAdminCookie(); }}>
               <button className="text-sm text-muted-foreground hover:text-foreground" type="submit">Выйти</button>
             </form>
           </nav>

@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: Props) {
         category: true,
       },
     });
-  } catch (e) {
+  } catch {
     // ignore
   }
   if (!product) return notFound();

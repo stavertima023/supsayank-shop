@@ -3,8 +3,8 @@ import { isAdminAuthenticated, setAdminCookie, computeAdminToken } from "@/lib/a
 
 export const dynamic = "force-dynamic";
 
-export default function AdminLoginPage() {
-  if (isAdminAuthenticated()) {
+export default async function AdminLoginPage() {
+  if (await isAdminAuthenticated()) {
     redirect("/admin");
   }
   async function login(formData: FormData) {
@@ -18,7 +18,7 @@ export default function AdminLoginPage() {
     const candidateToken = computeAdminToken(password, salt);
     const expectedToken = computeAdminToken(expected, salt);
     if (candidateToken === expectedToken) {
-      setAdminCookie();
+      await setAdminCookie();
       redirect("/admin");
     }
     // fallthrough -> redirect with failure

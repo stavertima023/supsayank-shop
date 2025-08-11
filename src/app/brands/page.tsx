@@ -6,7 +6,7 @@ export default async function BrandsPage() {
   let brands: Array<{ id: string; name: string; slug: string }> = [];
   try {
     brands = await prisma.brand.findMany({ orderBy: { name: "asc" } });
-  } catch (e) {
+  } catch {
     // ignore
   }
   return (

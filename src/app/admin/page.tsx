@@ -3,8 +3,8 @@ import { requireAdminOrRedirect } from "@/lib/adminAuth";
 
 export const dynamic = "force-dynamic";
 
-export default function AdminHomePage() {
-  requireAdminOrRedirect();
+export default async function AdminHomePage() {
+  await requireAdminOrRedirect();
   return (
     <div className="grid gap-4 sm:grid-cols-2">
       <Link href="/admin/products" className="p-4 rounded-lg border border-border hover:bg-muted">

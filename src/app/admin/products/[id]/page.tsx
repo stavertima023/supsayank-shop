@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { notFound, redirect } from "next/navigation";
+import type { Size } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -54,7 +55,7 @@ async function deleteProduct(formData: FormData) {
 }
 
 export default async function AdminEditProductPage({ params }: Props) {
-  requireAdminOrRedirect();
+  await requireAdminOrRedirect();
   const { id } = await params;
   const product = await prisma.product.findUnique({
     where: { id },
@@ -131,12 +132,14 @@ async function createVariant(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const productId = String(formData.get("productId") || "");
-  const size = String(formData.get("size") || "") || null;
+  const sizeRaw = String(formData.get("size") || "");
   const color = String(formData.get("color") || "") || null;
   const sku = String(formData.get("sku") || "").trim();
   const stock = Number(formData.get("stock") || 0);
   if (!productId || !sku) return;
-  await prisma.productVariant.create({ data: { productId, size: size as any, color, sku, stock: isNaN(stock) ? 0 : stock } });
+  const allowedSizes = new Set(["XS","S","M","L","XL","XXL"]);
+  const size: Size | null = sizeRaw && allowedSizes.has(sizeRaw) ? (sizeRaw as Size) : null;
+  await prisma.productVariant.create({ data: { productId, size, color, sku, stock: isNaN(stock) ? 0 : stock } });
 }
 
 async function updateVariant(formData: FormData) {
@@ -144,12 +147,14 @@ async function updateVariant(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const id = String(formData.get("id") || "");
-  const size = String(formData.get("size") || "") || null;
+  const sizeRaw = String(formData.get("size") || "");
   const color = String(formData.get("color") || "") || null;
   const sku = String(formData.get("sku") || "").trim();
   const stock = Number(formData.get("stock") || 0);
   if (!id || !sku) return;
-  await prisma.productVariant.update({ where: { id }, data: { size: size as any, color, sku, stock: isNaN(stock) ? 0 : stock } });
+  const allowedSizes = new Set(["XS","S","M","L","XL","XXL"]);
+  const size: Size | null = sizeRaw && allowedSizes.has(sizeRaw) ? (sizeRaw as Size) : null;
+  await prisma.productVariant.update({ where: { id }, data: { size, color, sku, stock: isNaN(stock) ? 0 : stock } });
 }
 
 async function deleteVariant(formData: FormData) {

@@ -23,7 +23,7 @@ async function deleteCategory(formData: FormData) {
 }
 
 export default async function AdminCategoriesPage() {
-  requireAdminOrRedirect();
+  await requireAdminOrRedirect();
   const categories = await prisma.category.findMany({ orderBy: { name: "asc" } });
   return (
     <div className="grid gap-8">
