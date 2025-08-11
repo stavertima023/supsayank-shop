@@ -14,7 +14,7 @@ async function updateProduct(formData: FormData) {
   requireAdminOrRedirect();
   const id = String(formData.get("id") || "");
   const title = String(formData.get("title") || "").trim();
-  let slug = slugify(title);
+  const slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = "RUB";

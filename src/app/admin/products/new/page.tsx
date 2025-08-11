@@ -12,7 +12,7 @@ async function createProduct(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const title = String(formData.get("title") || "").trim();
-  let slug = slugify(title);
+  const slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = "RUB";

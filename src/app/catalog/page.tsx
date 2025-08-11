@@ -2,7 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
-export default async function CatalogPage({ searchParams }: { searchParams?: Record<string, string | string[]> }) {
+export default async function CatalogPage({ searchParams }: { searchParams: Promise<Record<string, string | string[]>> }) {
   let products: Array<{
     id: string;
     slug: string;
@@ -12,13 +12,16 @@ export default async function CatalogPage({ searchParams }: { searchParams?: Rec
     images: { url: string | null }[];
     brand: { name: string };
   }> = [];
+  let brands: Array<{ id: string; name: string; slug: string }> = [];
   try {
-    const where: any = {};
-    const brandSlug = typeof searchParams?.brand === 'string' ? searchParams!.brand : undefined;
+    const where: { brandId?: string } = {};
+    const sp = await searchParams;
+    const brandSlug = typeof sp?.brand === 'string' ? sp.brand : undefined;
     if (brandSlug) {
       const brand = await prisma.brand.findUnique({ where: { slug: brandSlug } });
       if (brand) where.brandId = brand.id;
     }
+    brands = await prisma.brand.findMany({ orderBy: { name: "asc" } });
     products = await prisma.product.findMany({
       where,
       include: {
@@ -37,6 +40,15 @@ export default async function CatalogPage({ searchParams }: { searchParams?: Rec
       <div className="flex items-baseline justify-between mb-6">
         <h1 className="text-2xl font-semibold">Каталог</h1>
       </div>
+      {brands.length > 0 && (
+        <div className="mb-6 flex flex-wrap gap-2">
+          {brands.map((b) => (
+            <Link key={b.id} href={`/catalog?brand=${b.slug}`} className="px-3 py-1 rounded-full border border-border text-sm hover:bg-muted">
+              {b.name}
+            </Link>
+          ))}
+        </div>
+      )}
       <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {products.map((p) => (
           <Link key={p.id} href={`/product/${p.slug}`} className="group">
