@@ -14,8 +14,7 @@ async function updateProduct(formData: FormData) {
   requireAdminOrRedirect();
   const id = String(formData.get("id") || "");
   const title = String(formData.get("title") || "").trim();
-  let slug = String(formData.get("slug") || "").trim();
-  if (!slug && title) slug = slugify(title);
+  let slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = "RUB";
@@ -23,6 +22,7 @@ async function updateProduct(formData: FormData) {
   const categoryId = String(formData.get("categoryId") || "");
   const imagesRaw = String(formData.get("images") || "").trim();
   const imageUrls = imagesRaw ? imagesRaw.split(/\n|,/).map((s) => s.trim()).filter(Boolean) : [];
+  const isFeatured = String(formData.get("isFeatured") || "") === "on";
 
   if (!id) return;
 
@@ -37,6 +37,7 @@ async function updateProduct(formData: FormData) {
         currency,
         brandId,
         categoryId,
+        isFeatured,
       },
     });
     if (imageUrls.length > 0) {
@@ -94,10 +95,7 @@ export default async function AdminEditProductPage({ params }: Props) {
           <label className="text-sm text-muted-foreground">Название</label>
           <input name="title" defaultValue={product.title} className="px-3 py-2 rounded-md bg-muted border border-border" required />
         </div>
-        <div className="grid gap-2">
-          <label className="text-sm text-muted-foreground">Slug</label>
-          <input name="slug" defaultValue={product.slug} className="px-3 py-2 rounded-md bg-muted border border-border" required />
-        </div>
+        {/* slug скрыт, генерируется автоматически */}
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Описание</label>
           <textarea name="description" defaultValue={product.description ?? ""} className="px-3 py-2 rounded-md bg-muted border border-border min-h-28" />
@@ -127,7 +125,8 @@ export default async function AdminEditProductPage({ params }: Props) {
           <label className="text-sm text-muted-foreground">Фото (по одному URL в строке)</label>
           <textarea name="images" defaultValue={product.images.map((i) => i.url).join("\n")} className="px-3 py-2 rounded-md bg-muted border border-border min-h-28" />
         </div>
-        <div className="flex items-center gap-2">
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isFeatured" defaultChecked={product.isFeatured} className="accent-accent" /> Хит продаж</label>
+        <div className="flex items-center gap-2 mt-2">
           <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md text-sm" type="submit">Сохранить</button>
         </div>
       </form>

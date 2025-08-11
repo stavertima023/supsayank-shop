@@ -2,7 +2,7 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
-export default async function CatalogPage() {
+export default async function CatalogPage({ searchParams }: { searchParams?: Record<string, string | string[]> }) {
   let products: Array<{
     id: string;
     slug: string;
@@ -13,7 +13,14 @@ export default async function CatalogPage() {
     brand: { name: string };
   }> = [];
   try {
+    const where: any = {};
+    const brandSlug = typeof searchParams?.brand === 'string' ? searchParams!.brand : undefined;
+    if (brandSlug) {
+      const brand = await prisma.brand.findUnique({ where: { slug: brandSlug } });
+      if (brand) where.brandId = brand.id;
+    }
     products = await prisma.product.findMany({
+      where,
       include: {
         images: { orderBy: { index: "asc" }, take: 1 },
         brand: true,

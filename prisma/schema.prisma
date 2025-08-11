@@ -60,8 +60,10 @@ model Product {
   description    String?
   priceCents     Int
   currency       String          @default("USD")
+  isFeatured     Boolean         @default(false)
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  isFeatured     Boolean         @default(false)
 
   brandId        String
   categoryId     String

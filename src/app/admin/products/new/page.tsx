@@ -2,7 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { redirect } from "next/navigation";
 import UploadImage from "@/app/admin/_components/UploadImage";
-import AutoSlug from "@/app/admin/_components/AutoSlug";
+// AutoSlug удалён из формы, slug генерируется сервером
 import { slugify } from "@/lib/slugify";
 
 export const dynamic = "force-dynamic";
@@ -12,8 +12,7 @@ async function createProduct(formData: FormData) {
   const { requireAdminOrRedirect } = await import("@/lib/adminAuth");
   requireAdminOrRedirect();
   const title = String(formData.get("title") || "").trim();
-  let slug = String(formData.get("slug") || "").trim();
-  if (!slug && title) slug = slugify(title);
+  let slug = slugify(title);
   const description = String(formData.get("description") || "").trim() || null;
   const price = Number(formData.get("price") || 0);
   const currency = "RUB";
@@ -21,6 +20,7 @@ async function createProduct(formData: FormData) {
   const categoryId = String(formData.get("categoryId") || "");
   const imagesRaw = String(formData.get("images") || "").trim();
   const imageUrls = imagesRaw ? imagesRaw.split(/\n|,/).map((s) => s.trim()).filter(Boolean) : [];
+  const isFeatured = String(formData.get("isFeatured") || "") === "on";
 
   if (!title || !slug || !brandId || !categoryId || !price) return;
   // ensure unique slug for product
@@ -43,6 +43,7 @@ async function createProduct(formData: FormData) {
       currency,
       brandId,
       categoryId,
+      isFeatured,
       images: {
         create: imageUrls.map((url, index) => ({ url, index })),
       },
@@ -75,15 +76,11 @@ export default async function AdminNewProductPage() {
     <div className="max-w-2xl">
       <h1 className="text-2xl font-semibold mb-4">Новый товар</h1>
       <form action={createProduct} className="grid gap-4">
-        <AutoSlug />
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Название</label>
           <input name="title" className="px-3 py-2 rounded-md bg-muted border border-border" required />
         </div>
-        <div className="grid gap-2">
-          <label className="text-sm text-muted-foreground">Slug</label>
-          <input name="slug" className="px-3 py-2 rounded-md bg-muted border border-border" required />
-        </div>
+        {/* slug скрыт, генерируется автоматически */}
         <div className="grid gap-2">
           <label className="text-sm text-muted-foreground">Описание</label>
           <textarea name="description" className="px-3 py-2 rounded-md bg-muted border border-border min-h-28" />
@@ -116,6 +113,7 @@ export default async function AdminNewProductPage() {
           <textarea name="images" className="px-3 py-2 rounded-md bg-muted border border-border min-h-28" placeholder="https://...\nhttps://..." />
           <UploadImage />
         </div>
+        <label className="flex items-center gap-2 text-sm"><input type="checkbox" name="isFeatured" className="accent-accent" /> Добавить в ХИТЫ ПРОДАЖ</label>
         <button className="px-4 py-2 bg-accent text-accent-foreground rounded-md text-sm" type="submit">Создать</button>
       </form>
     </div>
