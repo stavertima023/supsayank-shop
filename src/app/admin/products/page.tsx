@@ -6,11 +6,33 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminProductsPage() {
   await requireAdminOrRedirect();
-  const products = await prisma.product.findMany({
-    include: { brand: true, category: true, images: { orderBy: { index: "asc" }, take: 1 } },
-    orderBy: { createdAt: "desc" },
-    take: 100,
-  });
+  let products: Array<{
+    id: string;
+    title: string;
+    priceCents: number;
+    currency: string;
+    brand: { name: string };
+    category: { name: string };
+    images: Array<{ url: string | null }>;
+  }> = [];
+  try {
+    const result = await prisma.product.findMany({
+      include: { brand: true, category: true, images: { orderBy: { index: "asc" }, take: 1 } },
+      orderBy: { createdAt: "desc" },
+      take: 100,
+    });
+    products = result.map((p) => ({
+      id: p.id,
+      title: p.title,
+      priceCents: p.priceCents,
+      currency: p.currency,
+      brand: { name: p.brand.name },
+      category: { name: p.category.name },
+      images: p.images.map((i) => ({ url: i.url })),
+    }));
+  } catch {
+    products = [];
+  }
   return (
     <div className="grid gap-6">
       <div className="flex items-center justify-between">

@@ -24,7 +24,13 @@ async function deleteBrand(formData: FormData) {
 
 export default async function AdminBrandsPage() {
   await requireAdminOrRedirect();
-  const brands = await prisma.brand.findMany({ orderBy: { name: "asc" } });
+  let brands: Array<{ id: string; name: string; slug: string }> = [];
+  try {
+    brands = await prisma.brand.findMany({ orderBy: { name: "asc" } });
+  } catch {
+    // Render empty state if DB temporarily unavailable
+    brands = [];
+  }
   return (
     <div className="grid gap-8">
       <div>

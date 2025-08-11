@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdminOrRedirect } from "@/lib/adminAuth";
 import { notFound, redirect } from "next/navigation";
-import type { Size } from "@prisma/client";
+import type { Prisma, Size } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -57,10 +57,21 @@ async function deleteProduct(formData: FormData) {
 export default async function AdminEditProductPage({ params }: Props) {
   await requireAdminOrRedirect();
   const { id } = await params;
-  const product = await prisma.product.findUnique({
-    where: { id },
-    include: { images: { orderBy: { index: "asc" } }, brand: true, category: true, variants: { orderBy: { sku: "asc" } } },
-  });
+  type ProductWithAll = Prisma.ProductGetPayload<{
+    include: { images: true; brand: true; category: true; variants: true };
+  }>;
+  let product: ProductWithAll | null = null;
+  try {
+    const prod = await prisma.product.findUnique({
+      where: { id },
+      include: { images: { orderBy: { index: "asc" } }, brand: true, category: true, variants: { orderBy: { sku: "asc" } } },
+    });
+    if (prod) {
+      product = prod as unknown as ProductWithAll;
+    }
+  } catch {
+    // handled by notFound below
+  }
   if (!product) return notFound();
   const [brands, categories] = await Promise.all([
     prisma.brand.findMany({ orderBy: { name: "asc" } }),

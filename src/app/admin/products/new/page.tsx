@@ -40,10 +40,16 @@ async function createProduct(formData: FormData) {
 
 export default async function AdminNewProductPage() {
   await requireAdminOrRedirect();
-  const [brands, categories] = await Promise.all([
-    prisma.brand.findMany({ orderBy: { name: "asc" } }),
-    prisma.category.findMany({ orderBy: { name: "asc" } }),
-  ]);
+  let brands: Array<{ id: string; name: string }> = [];
+  let categories: Array<{ id: string; name: string }> = [];
+  try {
+    [brands, categories] = await Promise.all([
+      prisma.brand.findMany({ orderBy: { name: "asc" } }),
+      prisma.category.findMany({ orderBy: { name: "asc" } }),
+    ]);
+  } catch {
+    // fall back to empty dropdowns
+  }
   return (
     <div className="max-w-2xl">
       <h1 className="text-2xl font-semibold mb-4">Новый товар</h1>
