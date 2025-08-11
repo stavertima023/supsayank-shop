@@ -12,20 +12,7 @@ export default async function Home() {
   });
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* header moved to layout */}
-
       <main>
-        <section className="border-b border-border">
-          <div className="mx-auto max-w-6xl px-4 py-16 grid gap-10 md:grid-cols-2">
-            <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">Streetwear от топ-брендов</h1>
-              <p className="text-muted-foreground text-lg">Supreme, Stüssy, Palace и другие. Минимализм, акцент на продукте, быстрая доставка.</p>
-             
-            </div>
-            <div className="aspect-[4/3] bg-[url('https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop')] bg-cover bg-center rounded-2xl" />
-          </div>
-        </section>
-
         <section>
           <div className="mx-auto max-w-6xl px-4 py-12">
             <div className="flex items-baseline justify-between mb-6">

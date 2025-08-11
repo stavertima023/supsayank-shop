@@ -42,22 +42,22 @@ export default async function RootLayout({
         <header className="sticky top-0 z-20 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
           <div className="mx-auto max-w-6xl px-4 h-16 flex items-center justify-between">
             <Link href="/" className="text-lg tracking-tight font-semibold hover:opacity-80">Supsayank shop</Link>
-            <nav className="flex items-center gap-6 text-sm">
+            <nav className="flex items-center gap-8 text-lg">
               <div className="relative group">
-                <button className="px-2 py-1 rounded hover:bg-muted">Одежда</button>
-                <div className="absolute left-0 mt-2 hidden group-hover:block bg-background border border-border rounded-md shadow-md p-2 min-w-48">
+                <button className="px-3 py-2 rounded hover:bg-muted">Одежда</button>
+                <div className="absolute left-0 mt-2 group-hover:flex hidden flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-60 z-50">
                   {categories.map((c) => (
-                    <Link key={c.id} href={`/category/${c.slug}`} className="block px-3 py-2 rounded hover:bg-muted">
+                    <Link key={c.id} href={`/category/${c.slug}`} className="px-4 py-2 rounded hover:bg-muted">
                       {c.name}
                     </Link>
                   ))}
                 </div>
               </div>
               <div className="relative group">
-                <button className="px-2 py-1 rounded hover:bg-muted">Бренды</button>
-                <div className="absolute left-0 mt-2 hidden group-hover:block bg-background border border-border rounded-md shadow-md p-2 min-w-48 max-h-80 overflow-auto">
+                <button className="px-3 py-2 rounded hover:bg-muted">Бренды</button>
+                <div className="absolute left-0 mt-2 group-hover:flex hidden flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-60 max-h-96 overflow-auto z-50">
                   {brands.map((b) => (
-                    <Link key={b.id} href={`/brands/${b.slug}`} className="block px-3 py-2 rounded hover:bg-muted">
+                    <Link key={b.id} href={`/brands/${b.slug}`} className="px-4 py-2 rounded hover:bg-muted">
                       {b.name}
                     </Link>
                   ))}
