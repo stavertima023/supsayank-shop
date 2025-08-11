@@ -39,7 +39,7 @@ export default async function CatalogPage() {
             />
             <div className="mt-3">
               <div className="text-sm">{p.brand.name}</div>
-              <div className="text-sm/5 text-black/70">{p.title}</div>
+              <div className="text-sm/5 text-muted-foreground">{p.title}</div>
               <div className="text-sm mt-1 font-semibold">{(p.priceCents / 100).toLocaleString("ru-RU", { style: "currency", currency: p.currency })}</div>
             </div>
           </Link>

@@ -14,7 +14,7 @@ export default async function BrandsPage() {
       <h1 className="text-2xl font-semibold mb-6">Бренды</h1>
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {brands.map((b) => (
-          <Link key={b.id} href={`/catalog?brand=${b.slug}`} className="px-4 py-3 border border-black/10 rounded-lg hover:bg-black/5">
+          <Link key={b.id} href={`/catalog?brand=${b.slug}`} className="px-4 py-3 border border-border rounded-lg hover:bg-muted">
             {b.name}
           </Link>
         ))}

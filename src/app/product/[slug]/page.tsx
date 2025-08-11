@@ -55,18 +55,18 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="space-y-6">
         <div className="space-y-1">
-          <div className="text-sm text-black/60">{product.brand.name} • {product.category.name}</div>
+          <div className="text-sm text-muted-foreground">{product.brand.name} • {product.category.name}</div>
           <h1 className="text-2xl font-semibold">{product.title}</h1>
         </div>
         <div className="text-xl font-semibold">{(product.priceCents / 100).toLocaleString("ru-RU", { style: "currency", currency: product.currency })}</div>
-        <p className="text-black/70">{product.description ?? ""}</p>
+        <p className="text-muted-foreground">{product.description ?? ""}</p>
 
         {product.variants.length > 0 && (
           <div className="space-y-2">
             <div className="text-sm">Размер</div>
             <div className="flex flex-wrap gap-2">
               {product.variants.map((v: VariantLite) => (
-                <button key={v.id} className="px-3 py-2 rounded-full border border-black/15 text-sm hover:bg-black/5">
+                <button key={v.id} className="px-3 py-2 rounded-full border border-border text-sm hover:bg-muted">
                   {v.size ?? "OS"}
                 </button>
               ))}
@@ -76,9 +76,9 @@ export default async function ProductPage({ params }: Props) {
 
         <div className="flex gap-3">
           <form action={async () => { 'use server'; /* placeholder for server action */ }}>
-            <button className="px-5 py-3 bg-black text-white rounded-full text-sm hover:bg-black/90">В корзину</button>
+            <button className="px-5 py-3 bg-accent text-accent-foreground rounded-full text-sm hover:bg-accent/90">В корзину</button>
           </form>
-          <Link href="/cart" className="px-5 py-3 border border-black rounded-full text-sm hover:bg-black/5">Перейти в корзину</Link>
+          <Link href="/cart" className="px-5 py-3 border border-border rounded-full text-sm hover:bg-muted">Перейти в корзину</Link>
         </div>
       </div>
     </div>
