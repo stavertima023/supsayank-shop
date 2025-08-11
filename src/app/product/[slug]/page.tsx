@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: Props) {
           <div className="text-sm text-muted-foreground">{product.brand.name} • {product.category.name}</div>
           <h1 className="text-2xl font-semibold">{product.title}</h1>
         </div>
-        <div className="text-xl font-semibold">{(product.priceCents / 100).toLocaleString("ru-RU", { style: "currency", currency: product.currency })}</div>
+        <div className="text-xl font-semibold">{(product.priceCents / 100).toLocaleString("ru-RU", { style: "currency", currency: 'RUB' })}</div>
         <p className="text-muted-foreground">{product.description ?? ""}</p>
 
         {product.variants.length > 0 && (

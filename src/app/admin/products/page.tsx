@@ -25,7 +25,7 @@ export default async function AdminProductsPage() {
       id: p.id,
       title: p.title,
       priceCents: p.priceCents,
-      currency: p.currency,
+      currency: 'RUB' as const,
       brand: { name: p.brand.name },
       category: { name: p.category.name },
       images: p.images.map((i) => ({ url: i.url })),
@@ -46,7 +46,7 @@ export default async function AdminProductsPage() {
               <div className="w-12 h-12 rounded-md bg-cover bg-center" style={{ backgroundImage: `url(${p.images[0]?.url ?? "https://images.unsplash.com/photo-1512436991641-6745cdb1723f"})` }} />
               <div>
                 <div className="font-medium">{p.title}</div>
-                <div className="text-xs text-muted-foreground">{p.brand.name} • {p.category.name} • {(p.priceCents/100).toLocaleString("ru-RU", { style: 'currency', currency: p.currency })}</div>
+                <div className="text-xs text-muted-foreground">{p.brand.name} • {p.category.name} • {(p.priceCents/100).toLocaleString("ru-RU", { style: 'currency', currency: 'RUB' })}</div>
               </div>
             </div>
             <div className="flex items-center gap-2">

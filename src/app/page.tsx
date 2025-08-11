@@ -42,7 +42,7 @@ export default function Home() {
                   <div className="mt-3">
                     <div className="text-sm">Supreme</div>
                     <div className="text-sm/5 text-muted-foreground">Logo Tee</div>
-                    <div className="text-sm mt-1 font-semibold">6 900 ₽</div>
+                    <div className="text-sm mt-1 font-semibold">{(6900).toLocaleString('ru-RU', { style: 'currency', currency: 'RUB' })}</div>
                   </div>
                 </Link>
               ))}
