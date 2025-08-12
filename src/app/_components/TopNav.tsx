@@ -41,12 +41,12 @@ export default function TopNav({ brands, categories }: Props) {
       >
         <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'clothing' ? null : 'clothing')}>Одежда</button>
         {openMenu === "clothing" && (
-          <div className="absolute left-0 mt-2 flex flex-col glass-menu rounded-md p-2 min-w-64 z-50 menu-fade">
+          <div className="absolute left-0 mt-2 flex flex-col solid-menu rounded-md p-2 min-w-64 z-50 menu-fade">
             {sortedCategories.map((c) => (
               <Link
                 key={c.id}
                 href={`/category/${c.slug}`}
-                className={`px-4 py-2 rounded hover:glass ${openMenu==='clothing' ? '' : ''}`}
+                className={`px-4 py-2 rounded hover:bg-muted ${openMenu==='clothing' ? '' : ''}`}
               >
                 {c.name}
               </Link>
@@ -61,12 +61,12 @@ export default function TopNav({ brands, categories }: Props) {
       >
         <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'brands' ? null : 'brands')}>Бренды</button>
         {openMenu === "brands" && (
-          <div className="absolute left-0 mt-2 flex max-h-96 overflow-auto flex-col glass-menu rounded-md p-2 min-w-64 z-50 menu-fade">
+          <div className="absolute left-0 mt-2 flex max-h-96 overflow-auto flex-col solid-menu rounded-md p-2 min-w-64 z-50 menu-fade">
             {sortedBrands.map((b) => (
               <Link
                 key={b.id}
                 href={`/brands/${b.slug}`}
-                className={`px-4 py-2 rounded hover:glass`}
+                className={`px-4 py-2 rounded hover:bg-muted`}
               >
                 {b.name}
               </Link>
