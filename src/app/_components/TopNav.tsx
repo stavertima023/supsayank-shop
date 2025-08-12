@@ -39,14 +39,14 @@ export default function TopNav({ brands, categories }: Props) {
         onMouseEnter={() => open("clothing")}
         onMouseLeave={scheduleClose}
       >
-        <button className="px-4 py-2 rounded hover:bg-muted" onClick={() => setOpenMenu(openMenu === 'clothing' ? null : 'clothing')}>Одежда</button>
+        <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'clothing' ? null : 'clothing')}>Одежда</button>
         {openMenu === "clothing" && (
-          <div className="absolute left-0 mt-2 flex flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-64 z-50">
+          <div className="absolute left-0 mt-2 flex flex-col glass-menu rounded-md p-2 min-w-64 z-50 menu-fade">
             {sortedCategories.map((c) => (
               <Link
                 key={c.id}
                 href={`/category/${c.slug}`}
-                className="px-4 py-2 rounded hover:bg-muted"
+                className={`px-4 py-2 rounded hover:glass ${openMenu==='clothing' ? '' : ''}`}
               >
                 {c.name}
               </Link>
@@ -59,14 +59,14 @@ export default function TopNav({ brands, categories }: Props) {
         onMouseEnter={() => open("brands")}
         onMouseLeave={scheduleClose}
       >
-        <button className="px-4 py-2 rounded hover:bg-muted" onClick={() => setOpenMenu(openMenu === 'brands' ? null : 'brands')}>Бренды</button>
+        <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'brands' ? null : 'brands')}>Бренды</button>
         {openMenu === "brands" && (
-          <div className="absolute left-0 mt-2 flex max-h-96 overflow-auto flex-col bg-background border border-border rounded-md shadow-md p-2 min-w-64 z-50">
+          <div className="absolute left-0 mt-2 flex max-h-96 overflow-auto flex-col glass-menu rounded-md p-2 min-w-64 z-50 menu-fade">
             {sortedBrands.map((b) => (
               <Link
                 key={b.id}
                 href={`/brands/${b.slug}`}
-                className="px-4 py-2 rounded hover:bg-muted"
+                className={`px-4 py-2 rounded hover:glass`}
               >
                 {b.name}
               </Link>
