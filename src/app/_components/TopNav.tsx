@@ -46,7 +46,7 @@ export default function TopNav({ brands, categories }: Props) {
               <Link
                 key={c.id}
                 href={`/category/${c.slug}`}
-                className={`px-4 py-2 rounded hover:bg-muted ${openMenu==='clothing' ? '' : ''}`}
+                className={`px-4 py-2 rounded hover:glass ${openMenu==='clothing' ? '' : ''}`}
               >
                 {c.name}
               </Link>
@@ -66,7 +66,7 @@ export default function TopNav({ brands, categories }: Props) {
               <Link
                 key={b.id}
                 href={`/brands/${b.slug}`}
-                className={`px-4 py-2 rounded hover:bg-muted`}
+                className={`px-4 py-2 rounded hover:glass`}
               >
                 {b.name}
               </Link>
