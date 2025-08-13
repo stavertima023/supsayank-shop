@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Supsayank shop — Streetwear",
+  title: "NENEGR SHOP — Streetwear",
   description: "Магазин streetwear брендов: Supreme, Stüssy, Palace и другие.",
   icons: { icon: "/favicon.ico" },
 };
@@ -42,7 +42,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <header className="sticky top-0 z-20">
           <div className="glass mx-auto max-w-6xl px-4 h-16 grid grid-cols-2 md:grid-cols-3 items-center gap-3 rounded-b-xl">
-            <Link href="/" className="text-base md:text-lg tracking-tight font-extrabold hover:opacity-80">NENEGR SHOP</Link>
+            <Link href="/" className="text-base md:text-lg tracking-tight font-bold hover:opacity-80">NENEGR SHOP</Link>
             <TopNav brands={brands} categories={categories} />
             <form action="/catalog" className="justify-self-end">
               <input name="q" placeholder="Поиск" className="px-3 py-2 rounded-md glass text-sm w-36 md:w-64 focus:outline-none" />
