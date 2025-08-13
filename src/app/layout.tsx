@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import TopNav from "@/app/_components/TopNav";
 export const dynamic = "force-dynamic";
@@ -43,10 +42,7 @@ export default async function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <header className="sticky top-0 z-20">
           <div className="glass mx-auto max-w-6xl px-4 h-16 grid grid-cols-2 md:grid-cols-3 items-center gap-3 rounded-b-xl">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-90">
-              <Image src="/logo.png" alt="NENEGR SHOP" width={160} height={40} className="h-8 md:h-10 w-auto" />
-              <span className="sr-only">NENEGR SHOP</span>
-            </Link>
+            <Link href="/" className="text-base md:text-lg tracking-tight font-extrabold hover:opacity-80">NENEGR SHOP</Link>
             <TopNav brands={brands} categories={categories} />
             <form action="/catalog" className="justify-self-end">
               <input name="q" placeholder="Поиск" className="px-3 py-2 rounded-md glass text-sm w-36 md:w-64 focus:outline-none" />

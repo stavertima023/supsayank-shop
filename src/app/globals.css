@@ -1,109 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  /* Minimal beige theme */
-  --background: #faf6ef; /* warm beige */
-  --foreground: #2d2a26; /* dark coffee */
-  --muted: #f0e9dd;      /* soft beige surface */
-  --muted-foreground: #7a7167; /* muted text */
-  --accent: #b08968;     /* tan accent */
-  --accent-foreground: #ffffff;
-  --border: #e7dfd3;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-/* Always-on dark theme; override system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-  background-image: radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px), radial-gradient(rgba(0,0,0,0.02) 1px, transparent 1px);
-  background-position: 0 0, 25px 25px;
-  background-size: 50px 50px;
-}
-
-/* Liquid glass utilities */
-.glass {
-  background: rgba(255, 255, 255, 0.18);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.35);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.22);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
-  box-shadow: 0 10px 28px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-.glass-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(0,0,0,0.12);
-}
-
-.glass-btn {
-  background: linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0.15));
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  color: var(--foreground);
-  border: 1px solid rgba(255,255,255,0.5);
-  border-radius: 9999px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.6);
-}
-.glass-btn:hover { background: linear-gradient(180deg, rgba(255,255,255,0.5), rgba(255,255,255,0.25)); }
-
-.glass-chip {
-  background: rgba(255,255,255,0.22);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  border: 1px solid rgba(255,255,255,0.4);
-}
-
-.glass-menu {
-  background: rgba(255,255,255,0.25);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  backdrop-filter: saturate(180%) blur(14px);
-  border: 1px solid rgba(255,255,255,0.45);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
-}
-
-/* Solid dropdown menu (no transparency) */
-.solid-menu {
-  background: #ffffff;
-  color: var(--foreground);
-  border: 1px solid var(--border);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-}
-
-/* Active chip/button subtle highlight */
-.glass-active {
-  background: rgba(255,255,255,0.32);
-  border-color: rgba(255,255,255,0.7);
-  box-shadow: inset 0 0 0 2px rgba(176, 137, 104, 0.25);
-}
-
-/* Menu appear animation */
-.menu-fade {
-  animation: menuFade 180ms ease-out;
-  transform-origin: top left;
-}
-@keyframes menuFade {
-  from { opacity: 0; transform: translateY(4px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
 }
