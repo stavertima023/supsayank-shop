@@ -43,13 +43,13 @@ export default function MobileNav({ brands, categories }: { brands: SimpleItem[]
               <div className="font-semibold">Меню</div>
               <button aria-label="Закрыть" onClick={toggleDrawer} className="p-2 rounded solid-chip hover:bg-muted">✕</button>
             </div>
-            <nav className="space-y-2">
+            <nav className="space-y-2 bg-white">
               <div>
                 <button onClick={() => toggleSection("clothing")} className="w-full text-left px-3 py-2 rounded hover:bg-muted font-medium">Одежда</button>
                 {openSection === "clothing" && (
-                  <div className="mt-1 pl-2 space-y-1">
+                  <div className="mt-1 pl-2 space-y-1 bg-white">
                     {categories.map((c) => (
-                      <Link key={c.id} href={`/category/${c.slug}`} onClick={() => setOpen(false)} className="block px-3 py-2 rounded hover:bg-muted">
+                      <Link key={c.id} href={`/category/${c.slug}`} onClick={() => setOpen(false)} className="block px-3 py-2 rounded bg-white hover:bg-muted">
                         {c.name}
                       </Link>
                     ))}
@@ -59,9 +59,9 @@ export default function MobileNav({ brands, categories }: { brands: SimpleItem[]
               <div>
                 <button onClick={() => toggleSection("brands")} className="w-full text-left px-3 py-2 rounded hover:bg-muted font-medium">Бренды</button>
                 {openSection === "brands" && (
-                  <div className="mt-1 pl-2 max-h-80 overflow-auto space-y-1">
+                  <div className="mt-1 pl-2 max-h-80 overflow-auto space-y-1 bg-white">
                     {brands.map((b) => (
-                      <Link key={b.id} href={`/brands/${b.slug}`} onClick={() => setOpen(false)} className="block px-3 py-2 rounded hover:bg-muted">
+                      <Link key={b.id} href={`/brands/${b.slug}`} onClick={() => setOpen(false)} className="block px-3 py-2 rounded bg-white hover:bg-muted">
                         {b.name}
                       </Link>
                     ))}

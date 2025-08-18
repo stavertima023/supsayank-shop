@@ -39,7 +39,7 @@ export default function TopNav({ brands, categories }: Props) {
         onMouseEnter={() => open("clothing")}
         onMouseLeave={scheduleClose}
       >
-        <button className="px-4 py-2 rounded solid-chip hover:bg-muted" onClick={() => setOpenMenu(openMenu === 'clothing' ? null : 'clothing')}>Одежда</button>
+        <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'clothing' ? null : 'clothing')}>Одежда</button>
         {openMenu === "clothing" && (
           <div className="absolute left-0 mt-2 flex flex-col solid-menu bg-white rounded-md p-2 min-w-64 z-50 menu-fade border border-border shadow-xl">
             {sortedCategories.map((c) => (
@@ -59,7 +59,7 @@ export default function TopNav({ brands, categories }: Props) {
         onMouseEnter={() => open("brands")}
         onMouseLeave={scheduleClose}
       >
-        <button className="px-4 py-2 rounded solid-chip hover:bg-muted" onClick={() => setOpenMenu(openMenu === 'brands' ? null : 'brands')}>Бренды</button>
+        <button className="px-4 py-2 rounded glass-chip hover:opacity-90" onClick={() => setOpenMenu(openMenu === 'brands' ? null : 'brands')}>Бренды</button>
         {openMenu === "brands" && (
           <div className="absolute left-0 mt-2 flex max-h-96 overflow-auto flex-col solid-menu bg-white rounded-md p-2 min-w-64 z-50 menu-fade border border-border shadow-xl">
             {sortedBrands.map((b) => (
