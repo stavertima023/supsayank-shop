@@ -35,7 +35,10 @@ export default function MobileNav({ brands, categories }: { brands: SimpleItem[]
           {/* Backdrop */}
           <div className="fixed inset-0 z-40 bg-black/30" onClick={toggleDrawer} />
           {/* Drawer */}
-          <aside className="fixed z-50 inset-y-0 left-0 w-72 solid-menu bg-white p-3 menu-fade border border-border shadow-xl">
+          <aside
+            className="fixed z-50 inset-y-0 left-0 w-72 solid-menu bg-white p-3 menu-fade border border-border shadow-xl"
+            style={{ backgroundColor: '#ffffff', opacity: 1, backdropFilter: 'none', WebkitBackdropFilter: 'none' }}
+          >
             <div className="flex items-center justify-between mb-2">
               <div className="font-semibold">Меню</div>
               <button aria-label="Закрыть" onClick={toggleDrawer} className="p-2 rounded hover:bg-muted">✕</button>
