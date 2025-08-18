@@ -22,7 +22,7 @@ export default function MobileNav({ brands, categories }: { brands: SimpleItem[]
     <>
       <button
         aria-label="Открыть меню"
-        className="md:hidden justify-self-end p-2 rounded glass-chip hover:opacity-90"
+        className="md:hidden justify-self-end p-2 rounded solid-chip hover:bg-muted"
         onClick={toggleDrawer}
       >
         <span className="block w-6 h-0.5 bg-current mb-1"></span>
@@ -41,7 +41,7 @@ export default function MobileNav({ brands, categories }: { brands: SimpleItem[]
           >
             <div className="flex items-center justify-between mb-2">
               <div className="font-semibold">Меню</div>
-              <button aria-label="Закрыть" onClick={toggleDrawer} className="p-2 rounded hover:bg-muted">✕</button>
+              <button aria-label="Закрыть" onClick={toggleDrawer} className="p-2 rounded solid-chip hover:bg-muted">✕</button>
             </div>
             <nav className="space-y-2">
               <div>
