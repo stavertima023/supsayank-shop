@@ -85,10 +85,13 @@ body {
 
 /* Solid dropdown menu (no transparency) */
 .solid-menu {
-  background: #ffffff;
+  background: #ffffff !important;
   color: var(--foreground);
   border: 1px solid var(--border);
   box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  opacity: 1 !important;
 }
 
 /* Active chip/button subtle highlight */
