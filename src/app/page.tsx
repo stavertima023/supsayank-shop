@@ -4,12 +4,20 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const hits = await prisma.product.findMany({
-    where: { isFeatured: true },
-    orderBy: { createdAt: "desc" },
-    include: { images: { orderBy: { index: "asc" }, take: 1 } },
-    take: 8,
-  });
+  let hits: any[] = [];
+  
+  try {
+    hits = await prisma.product.findMany({
+      where: { isFeatured: true },
+      orderBy: { createdAt: "desc" },
+      include: { images: { orderBy: { index: "asc" }, take: 1 } },
+      take: 8,
+    });
+  } catch (error) {
+    console.error("Failed to fetch featured products:", error);
+    hits = [];
+  }
+  
   return (
     <div className="min-h-screen bg-background text-foreground">
       <main>
